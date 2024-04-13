@@ -1,0 +1,4 @@
+body
+    div #content align-center bg-color src="http://www.google.com/images/logos/ps_logo2.png"
+        h1
+            Hello World!

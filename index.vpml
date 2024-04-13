@@ -1,0 +1,17 @@
+head
+    link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css"
+    script src="https://cdn.tailwindcss.com"
+    script type="importmap" src="threejs.importmap"
+html
+    body
+        div flex gap-1 flex-wrap pt-[100px]    
+            div flex-item bg-primary flex-1
+                Hello
+            div bg-primary w-full max-w-prose flex gap-1
+                div flex-item bg-secondary flex-1
+                    Hello
+                div flex-item bg-secondary flex-1
+                    World
+            div flex-item bg-primary flex-1
+                
+                

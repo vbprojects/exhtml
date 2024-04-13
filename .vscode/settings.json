@@ -1,0 +1,11 @@
+{
+    "julia.environmentPath": "e:\\github\\althtml\\althtml",
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": ".*",
+                "cmd": "E:/github/althtml/VPMLRC/bin/VPMLR.exe && echo 'vpc.jl done'"
+            }
+        ]
+    }
+}
