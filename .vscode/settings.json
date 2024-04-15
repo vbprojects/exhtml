@@ -4,8 +4,11 @@
         "commands": [
             {
                 "match": ".*",
-                "cmd": "E:/github/althtml/VPMLRC/bin/VPMLR.exe && echo 'vpc.jl done'"
+                "cmd": "E:/github/althtml/gpp.exe index.vpml -o index.vpmlp && E:/github/althtml/vpc.exe index.vpmlp index.html && echo 'vpc.exe done'"
             }
         ]
+    },
+    "files.associations": {
+        "fnmatch.h": "c"
     }
 }

@@ -1,0 +1,91 @@
+head
+    raw <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    raw <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    script src="https://cdn.tailwindcss.com"
+    title VPML - Example
+html
+    body w-full
+        div navbar justify-center bg-base-300 sm:text-3xl text-5xl
+            span sm:hidden
+                VPML
+            span hidden sm:block
+                VPML - A Simple HTML Template Language
+        div sm:container mx-auto py-4 sm:px-6 px-4 lg:max-w-[800px]
+            h2 text-2xl md:text-3xl text-blue-300 mb-4
+                Learn VPML
+            p text-base md:text-lg text-gray-300
+                VPML (Very Personal Markup Language) is a simple templating language that compiles into HTML. It uses indentation to determine element hierarchy. The language is meant to be flexible, predictable, and easy to read. The repo also comes with tooling for compiling and using General Preprocesser (GPP) to serve as a preprocessor for VPML files.
+            div #syntax container mx-auto px-4 sm:px-6 lg:px-8 py-3
+                h3 text-xl md:text-2xl text-blue-300 mb-3
+                    Syntax
+                ul list-disc pl-5 text-gray-400
+? example of macro use
+                    li text-sm md:text-base 
+                        raw Tokens are delimited by spaces ' '.
+                    li text-sm md:text-base
+                        Newline '\n' and carriage return '\r' characters are stripped from tokens.
+                    li text-sm md:text-base
+                        raw Lines whose first token is a valid HTML tag name are processed as HTML elements.
+                    li text-sm md:text-base
+                        raw Tokens starting with '#' within a line are considered as part of the ID for the element.
+                    li text-sm md:text-base
+                        raw Tokens containing '=' within a line are processed as attributes with their respective values.
+                    li text-sm md:text-base
+                        raw Tokens that do not fit the rules for ID or attributes are assumed to be class names.
+                    li text-sm md:text-base
+                        raw Lines that do not start with a valid HTML tag or start with 'raw' are processed as text content.
+                    li text-sm md:text-base
+                        Comments are denoted by a line starting with '?'.
+            div #example container mx-auto px-4 sm:px-6 lg:px-8 py-5
+                h3 text-xl md:text-2xl text-blue-300 mb-3
+                    Example
+                pre p-4 bg-gray-800 text-gray-300 whitespace-pre-wrap
+                    raw head
+                    raw   title
+                    raw     VPML - Example
+                    raw   link rel="stylesheet" href="styles.css"
+                    raw html
+                    raw ? this is a comment
+                    raw     body #body bg-black
+                    raw         div #content bg-gray-800 #1
+                    raw             h1 bg-blue
+                    raw                 Hello World
+                    raw             p
+                    raw ?           this is a comment
+                    raw                 raw This is my site
+                    raw         div #content bg-gray-800 #2
+                    raw             h1 bg-blue
+                    raw                 Hello World
+                h3 text-xl md:text-2xl text-blue-300 mb-3
+                    Output
+? Comment
+                pre p-4 bg-gray-800 text-gray-300 whitespace-pre-wrap
+                    raw &lt head &gt
+                    raw   &lt title &gt
+                    raw     VPML - Example
+                    raw   &lt / title &gt
+                    raw   &lt link rel="stylesheet" href="styles.css" &gt
+                    raw   &lt / link &gt
+                    raw &lt / head &gt
+                    raw &lt html &gt
+                    raw     &lt body id="body" class="bg-black" &gt
+                    raw         &lt div id="content1" class="bg-gray-800" &gt
+                    raw             &lt h1 class="bg-blue" &gt
+                    raw                 Hello World
+                    raw             &lt / h1 &gt
+                    raw             &lt p &gt
+                    raw                 This is my site
+                    raw             &lt / p &gt
+                    raw         &lt / div &gt
+                    raw         &lt div id="content2" class="bg-gray-800" &gt
+                    raw             &lt h1 class="bg-blue" &gt
+                    raw                 Hello World
+                    raw             &lt / h1 &gt
+                    raw         &lt / div &gt
+                    raw     &lt / body &gt
+                    raw &lt / html &gt
+                    
+            
+            
+
+        
