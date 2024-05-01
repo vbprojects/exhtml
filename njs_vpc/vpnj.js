@@ -43,7 +43,7 @@ function process_line(line){
     }
     if(maybe_tag[maybe_tag.length - 1] == ">"){
         maybe_tag = maybe_tag.slice(0, maybe_tag.length - 1);
-        console.log(maybe_tag)
+//        console.log(maybe_tag)
         is_self_closing = true;
     }
     if(tag_names.has(maybe_tag)){
@@ -53,9 +53,10 @@ function process_line(line){
     if(is_tag){
         return new tag_element(tokens, maybe_tag, is_self_closing, line);
     }
-    // if(maybe_tag == ":set"){
-    //     return new macro_setter(line);
-    // }
+    if(maybe_tag[0] == "@"){
+        console.log("Maybe tag: " + maybe_tag)
+        return new global_macro_element(maybe_tag);
+    }
     if(maybe_tag == ":macro"){
         return new macro_setter(tokens);
     }
@@ -64,6 +65,37 @@ function process_line(line){
     }
     return new text_element(line, maybe_tag == "raw");
 
+}
+
+class global_macro_element extends element{
+    constructor(name){
+        super();
+        this.name = name;
+    }
+    get_children(){
+        if(this.name in global_state){
+            console.log("Invoking: " + this.name + " with " + global_state[this.name].line)
+            var elem = global_state[this.name];
+            console.log("Test :" + (elem instanceof element))
+            elem.children = elem.children.concat(this.children);
+            elem.parent = this.parent;
+            for(child of elem.children){
+                child.parent = elem;
+            }
+            console.log("Attached children: " + elem.children)
+            return [elem];
+        }
+        return [];
+    }
+    forward(){
+        return "";
+    }
+    backward(){
+        return "";
+    }
+    get_text(){
+        return "";
+    }
 }
 
 class text_element extends element{
@@ -110,16 +142,21 @@ class tag_element extends element{
         this.line = line;
     }
     forward(){
-        
+        this.id = "";
+        this.classes = [];
+        this.attributes = [];
+        // console.log("CHANGE")
         for(let i = 1; i < this.tokens.length; i++){
             var token = this.tokens[i];
             if(token[0] == "@"){
+                console.log("Token: " + token)
+                console.log("Global state: " + global_state[token])
                 token = global_state[token].text;
             }
             if(token.includes("=")){
                 this.attributes.push(token);
             }else if(token[0] == "#"){
-                this.id += tokens[i].slice(1);
+                this.id += token.slice(1);
             }else if(token == "|"){
                 let post_tag = this.line.slice(this.line.indexOf("|") + 1).
                 trimStart();
@@ -179,11 +216,23 @@ class macro_setter extends element{
     constructor(tokens){
         super();
         this.name = ""
-        if(tokens.length > 1)
-            this.name = tokens[1];
+        this.tokens = tokens;
+        if(tokens.length > 0){
+            if(tokens[1][0] == "!")
+                this.name = tokens[1];
+        }
+        
     }
     forward(){
-        macros[this.name] = this.children;
+        if(this.name == ""){
+            for(let i = 1; i < Math.min(this.children.length + 1, this.tokens.length); i++){
+                console.log("Setting: " + "@" + this.tokens[i] + " to " + this.children[i - 1].line)
+                global_state["@" + this.tokens[i]] = this.children[i - 1];
+            }
+        }
+        else
+            macros[this.name] = this.children;
+        
         return "";
     }
     backward(){
@@ -198,17 +247,25 @@ class macro_setter extends element{
 }
 
 class macro_element extends element{
+    overwritten;
     constructor(name){
         super();
+        this.overwritten = {}
         this.name = name;
     }
     forward(){
         for(let i = 0; i < this.children.length; i++){
-            global_state["@" + i] = this.children[i];
+            let elem = this.children[i];
+            if(("@" + i) in global_state)
+                this.overwritten[i] = global_state["@" + i];
+            global_state["@" + i] = elem;
         }
         return "";
     }
     backward(){
+        for(let [key, value] of Object.entries(this.overwritten)){
+            global_state["@" + key] = value;
+        }
         return "";
     }
     get_text(){
@@ -287,8 +344,16 @@ function create_tree(input){
 
 function recurse(root){
     result = "";
+    
+    if(!(root instanceof element)){
+        console.log(root instanceof element)
+        return "";
+    }
     let forward = root.forward();
     for(child of root.get_children()){
+        if(!(child instanceof element)){
+            console.log("Problem Forward " + forward)
+        }
         result += recurse(child);
     }
     return forward + result + root.backward();

@@ -115,7 +115,8 @@ int forward(char* line, int line_num, int max_line_length, char* line_out, char 
     int pchl = strlen(pch);
     printf("Tag: %s %d %d\n", pch, pchl, is_tag(pch, pchl) || is_tag(pch, pchl - 1));
     // printf("Forward Start Line: %s", line);
-    if(is_tag(pch, pchl) || is_tag(pch, pchl - 1)){
+    if(is_tag(pch, pchl) || is_tag(pch, pchl - 1) || pch[0] == '<'){
+        int forward_tag = 
         strncpy(line_tags[line_num], pch, pchl);
         char ids[max_line_length], classes[max_line_length], attrs[max_line_length];
         memset(ids, 0, max_line_length); memset(classes, 0, max_line_length); memset(attrs, 0, max_line_length);

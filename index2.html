@@ -1,0 +1,91 @@
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<title>VPML - Example
+</title>
+</head>
+<html><div>It does  works!</div>
+<div>Does This Work?</div>
+<body class="w-full"><div class="navbar justify-center bg-base-300 sm:text-3xl text-5xl"><span class="sm:hidden">VPML
+</span>
+<span class="hidden sm:block">VPML - A Simple HTML Template Language
+</span>
+</div>
+<div class="sm:container mx-auto py-4 sm:px-6 px-4 lg:max-w-[800px]"><h2 class="text-2xl md:text-3xl text-blue-300 mb-4">Learn VPML
+</h2>
+<p class="text-base md:text-lg text-gray-300">VPML (Very Personal Markup Language) is a simple templating language that compiles into HTML. It uses indentation to determine element hierarchy. The language is meant to be flexible, predictable, and easy to read. The repo also comes with tooling for compiling and using General Preprocesser (GPP) to serve as a preprocessor for VPML files.
+</p>
+<div id="lt" class="container mx-auto px-4 sm:px-6 lg:px-8 py-3"><h3 class="text-xl md:text-2xl text-blue-300 mb-3">Syntax
+</h3>
+<ul class="list-disc pl-5 text-gray-400"><li class="li_tag">Tokens are delimited by spaces ' '.
+</li>
+<li class="text-sm md:text-base">Newline '\\n' and carriage return '\\r' characters are stripped from tokens.
+</li>
+<li class="text-sm md:text-base">Lines whose first token is a valid HTML tag name or first token starts with '<' are processed as HTML elements.
+</li>
+<li class="text-sm md:text-base">If being processed as an element, if the first token ends with '>', it is considered as a self-closing tag.
+</li>
+<li class="text-sm md:text-base">Tokens starting with '#' within a line are considered as part of the ID for the element.
+</li>
+<li class="text-sm md:text-base">Tokens containing '=' within a line are processed as attributes with their respective values.
+</li>
+<li class="text-sm md:text-base">Tokens that do not fit the rules for ID or attributes are assumed to be class names.
+</li>
+<li class="text-sm md:text-base">Lines that do not start with a valid HTML tag or start with 'raw' are processed as text content.
+</li>
+<li class="text-sm md:text-base">Comments are denoted by a line starting with '#'.
+</li>
+<li class="text-sm md:text-base">If using GPP, you can define macros and use them within your VPML files. I recommend latex style macros.
+</li>
+</ul>
+</div>
+<div id="lt" class="container mx-auto px-4 sm:px-6 lg:px-8 py-5"><h3 class="text-xl md:text-2xl text-blue-300 mb-3">Example
+</h3>
+<pre class="p-4 bg-gray-800 text-gray-300 whitespace-pre-wrap">head
+  title
+    VPML - Example
+  link rel="stylesheet" href="styles.css"
+html
+# this is a comment
+    body #body bg-black
+        div #content bg-gray-800 #1
+            h1 bg-blue
+                Hello World
+            p
+#           this is a comment
+                raw This is my site
+        div #content bg-gray-800 #2
+            h1 bg-blue
+                Hello World
+</pre>
+<h3 class="text-xl md:text-2xl text-blue-300 mb-3">Output
+</h3>
+<pre class="p-4 bg-gray-800 text-gray-300 whitespace-pre-wrap">&lt head &gt
+  &lt title &gt
+    VPML - Example
+  &lt / title &gt
+  &lt link rel="stylesheet" href="styles.css" &gt
+  &lt / link &gt
+&lt / head &gt
+&lt html &gt
+    &lt body id="body" class="bg-black" &gt
+        &lt div id="content1" class="bg-gray-800" &gt
+            &lt h1 class="bg-blue" &gt
+                Hello World
+            &lt / h1 &gt
+            &lt p &gt
+                This is my site
+            &lt / p &gt
+        &lt / div &gt
+        &lt div id="content2" class="bg-gray-800" &gt
+            &lt h1 class="bg-blue" &gt
+                Hello World
+            &lt / h1 &gt
+        &lt / div &gt
+    &lt / body &gt
+&lt / html &gt
+</pre>
+</div>
+</div>
+</body>
+</html>

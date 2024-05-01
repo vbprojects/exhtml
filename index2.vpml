@@ -6,6 +6,11 @@ head
     title
         VPML - Example
 html
+    :macro !weird
+        div | @0 works!
+    !weird
+        It does 
+    div | Does This Work?
     body w-full
         div navbar justify-center bg-base-300 sm:text-3xl text-5xl
             span sm:hidden

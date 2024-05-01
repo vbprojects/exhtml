@@ -1,0 +1,25 @@
+{
+    "name": "vpml-language",
+    "displayName": "VPML Language Support",
+    "description": "Syntax highlighting for VPML files.",
+    "version": "0.0.1",
+    "engines": {
+      "vscode": "^1.50.0"
+    },
+    "categories": [
+      "Programming Languages"
+    ],
+    "contributes": {
+      "languages": [{
+        "id": "vpml",
+        "aliases": ["VPML", "vpml"],
+        "extensions": [".vpml"]
+      }],
+      "grammars": [{
+        "language": "vpml",
+        "scopeName": "source.vpml",
+        "path": "./syntaxes/vpml.tmLanguage.json"
+      }]
+    }
+  }
+  
